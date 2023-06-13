@@ -1,4 +1,7 @@
 // Generated from GyhLang.g4 by ANTLR 4.7.2
+
+    import java.util.ArrayList;
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -16,11 +19,7 @@ public class GyhLangParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		ListaDeclaracoes=1, Declaracao=2, TipoVar=3, PCDEC=4, PCPROG=5, PCINT=6, 
-		PCLER=7, PCREAL=8, PCIMPRIMIR=9, PCSE=10, PCENTAO=11, PCENQTO=12, PCINI=13, 
-		PCFIM=14, WS=15, COMMENT=16, VAR=17, NUMINT=18, NUMREAL=19, OPARIT=20, 
-		OPBOOL=21, OPMAIOR=22, OPMENOR=23, OPIGUAL=24, CADEIA=25, ATRIB=26, AbrePar=27, 
-		FechaPar=28, DELIM=29;
+		DELIM=1, PCDEC=2, ListaDeclaracoes=3, PCPROG=4;
 	public static final int
 		RULE_prog = 0;
 	private static String[] makeRuleNames() {
@@ -32,20 +31,12 @@ public class GyhLangParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, null, null, null, "'DEC'", "'PROG'", "'INT'", "'LER'", "'REAL'", 
-			"'IMPRIMIR'", "'SE'", "'ENTAO'", "'ENQTO'", "'INI'", "'FIM'", null, null, 
-			null, null, null, null, null, "'>'", "'<'", null, null, "':='", "'('", 
-			"')'", "':'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "ListaDeclaracoes", "Declaracao", "TipoVar", "PCDEC", "PCPROG", 
-			"PCINT", "PCLER", "PCREAL", "PCIMPRIMIR", "PCSE", "PCENTAO", "PCENQTO", 
-			"PCINI", "PCFIM", "WS", "COMMENT", "VAR", "NUMINT", "NUMREAL", "OPARIT", 
-			"OPBOOL", "OPMAIOR", "OPMENOR", "OPIGUAL", "CADEIA", "ATRIB", "AbrePar", 
-			"FechaPar", "DELIM"
+			null, "DELIM", "PCDEC", "ListaDeclaracoes", "PCPROG"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -94,6 +85,37 @@ public class GyhLangParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
+
+	    private String _varNome;
+	    private String _varTipo;
+	    private String _varValor;
+	    private Simbolo _varSimbolo;
+	    private TabelaSimbolo _varTabela = new TabelaSimbolo();
+
+	    //===
+	    private GyhProgram program = new GyhProgram();
+
+	    private ArrayList<Comando> listCmd = new ArrayList<>();
+
+	    
+	    //===
+
+	    public void addTabelaSimbolo(String nome, String tipo, String valor){
+	        _varSimbolo = new Simbolo(nome, tipo, valor);
+	        if (_varTabela.exists(nome)){
+	            System.out.println("\n Erro Semantico: variavel ja declarada: " + _varSimbolo.toString());
+	        }
+	        else{
+	            _varTabela.add(_varSimbolo);
+	        }
+	    }
+
+	    public void verificaVar(String nome){
+	        if(_varTabela.exists(nome){
+	            System.out.println("\n Erro Semantico: variavel nao declarada: " + nome);
+	        }
+	    }
+
 	public GyhLangParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
@@ -137,6 +159,11 @@ public class GyhLangParser extends Parser {
 			match(DELIM);
 			setState(6);
 			match(PCPROG);
+
+			        program.setVarTabela(_varTabela);
+			        program.setComando(listCmd);
+			        program.generateTarget();
+			    
 			}
 		}
 		catch (RecognitionException re) {
@@ -151,9 +178,9 @@ public class GyhLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\37\13\4\2\t\2\3\2"+
-		"\3\2\3\2\3\2\3\2\3\2\3\2\2\2\3\2\2\2\2\t\2\4\3\2\2\2\4\5\7\37\2\2\5\6"+
-		"\7\6\2\2\6\7\7\3\2\2\7\b\7\37\2\2\b\t\7\7\2\2\t\3\3\2\2\2\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\6\f\4\2\t\2\3\2\3"+
+		"\2\3\2\3\2\3\2\3\2\3\2\3\2\2\2\3\2\2\2\2\n\2\4\3\2\2\2\4\5\7\3\2\2\5\6"+
+		"\7\4\2\2\6\7\7\5\2\2\7\b\7\3\2\2\b\t\7\6\2\2\t\n\b\2\1\2\n\3\3\2\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

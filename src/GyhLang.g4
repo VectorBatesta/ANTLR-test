@@ -10,32 +10,51 @@ grammar GyhLang;
     private Simbolo _varSimbolo;
     private TabelaSimbolo _varTabela = new TabelaSimbolo();
 
+    //===
+    private GyhProgram program = new GyhProgram();
+
+    private ArrayList<Comando> listCmd = new ArrayList<>();
+
+    
+    //===
+
     public void addTabelaSimbolo(String nome, String tipo, String valor){
         _varSimbolo = new Simbolo(nome, tipo, valor);
         if (_varTabela.exists(nome)){
-            System.out.println("\n Erro Semantico: variavel ja declarada" + _varSimbolo.toString());
+            System.out.println("\n Erro Semantico: variavel ja declarada: " + _varSimbolo.toString());
         }
         else{
             _varTabela.add(_varSimbolo);
         }
     }
+
+    public void verificaVar(String nome){
+        if(_varTabela.exists(nome){
+            System.out.println("\n Erro Semantico: variavel nao declarada: " + nome);
+        }
+    }
 }
 
 
-prog: DELIM PCDEC ListaDeclaracoes DELIM PCPROG;
+//============================================================================
+//================================== REGRAS ==================================
+//============================================================================
 
-ListaDeclaracoes [int qtdeDec]: {$qtdeDec=0;}
-    (Declaracao
-     {$qtdeDec++;}
-    )+
-    {System.out.println("\n\nA quantidade de declaracoes foi: " + $qtdeDec);} ;
+prog: DELIM PCDEC ListaDeclaracoes DELIM PCPROG
+    {
+        program.setVarTabela(_varTabela);
+        program.setComando(listCmd);
+        program.generateTarget();
+    } ;
+
+ListaDeclaracoes: (Declaracao)+;
 
 Declaracao: VAR DELIM TipoVar
         {
             addTabelaSimbolo(_input.LT(-3).getText(), _input.LT(-1).getText(), null);
-        };
+        } ;
 
-ListaComandos: (comando)+;
+ListaComandos: (Comando)+;
 
 
 Comando: ComandoAtribuicao | ComandoEntrada | ComandoSaida | ComandoCondicao | ComandoRepeticao | SubAlgoritmo;
@@ -46,16 +65,27 @@ ComandoAtribuicao: VAR
             }
         }
     ATRIB ExpressaoAritmetica;
-ComandoEntrada: PCLER VAR;
-ComandoSaida: PCIMPRIMIR ComandoSaida2;
-ComandoSaida2: VAR | CADEIA;
+ComandoEntrada: PCLER VAR
+        {
+            verificaVar(_input.LT(-1).getText());
+            ComandoLeitura cmd = new ComandoLeitura();
+            cmd.setId(_input.LT(-1).getText());
+            listCmd.add(cmd);
+        } ;
+ComandoSaida: PCIMPRIMIR (VAR 
+        {
+            verificaVar(_input.LT(-1).getText());
+            ComandoEscrita cmd = new ComandoEscrita();
+            cmd.setId(_input.LT(-1).getText());
+            listCmd.add(cmd);
+        }
+                         | CADEIA);
 ComandoCondicao: PCSE ExpressaoRelacional PCENTAO Comando (PCSENAO Comando)?;
 ComandoRepeticao: PCENQTO ExpressaoRelacional Comando;
 
 
 
-//ExpressaoAritmetica → TermoAritmetico ExpressaoAritmetica2;
-//ExpressaoAritmetica2 → '+' ExpressaoAritmetica | '-' ExpressaoAritmetica | e;
+ExpressaoAritmetica: TermoAritmetico (('+' | '-') ExpressaoAritmetica)?;
 //TermoAritmetico → FatorAritmetico TermoAritmetico2;
 //TermoAritmetico2 → '*' FatorAritmetico TermoAritmetico2 | '/' FatorAritmetico TermoAritmetico2 | e;
 //FatorAritmetico → NUMINT | NUMREAL | VARIAVEL | '(' ExpressaoAritmetica ')'

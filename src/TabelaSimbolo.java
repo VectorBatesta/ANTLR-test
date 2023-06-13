@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TabelaSimbolo{
@@ -19,9 +20,19 @@ public class TabelaSimbolo{
         this.tabela.put(simbolo.getNome(), simbolo);
     }
 
-    public boolean exists(String){
+    public boolean exists(String nome){
         return this.tabela.get(nome) != null;
     }
 
+    public ArrayList<Simbolo> getAll(){
+        ArrayList<Simbolo> lista = new ArrayList<>();
+        
+        for(Simbolo s : tabela.values()){
+            lista.add(s);
+        }
+        
+        return lista;
+    }
+    
     //criar getter setter
 }

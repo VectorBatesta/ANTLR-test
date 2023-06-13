@@ -40,8 +40,9 @@ public class Main {
 
             CommonTokenStream token = new CommonTokenStream(lexer);
             GyhLangParser parser = new GyhLangParser(token);
-
+            
             parser.prog();
+            parser.generateTarget();
         }
     }
 }
