@@ -3,6 +3,20 @@ null
 null
 null
 null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
 'DEC'
 'PROG'
 'INT'
@@ -10,6 +24,7 @@ null
 'REAL'
 'IMPRIMIR'
 'SE'
+'SENAO'
 'ENTAO'
 'ENQTO'
 'INI'
@@ -21,9 +36,12 @@ null
 null
 null
 null
+'>='
 '>'
+'<='
 '<'
 null
+'!='
 null
 ':='
 '('
@@ -34,6 +52,20 @@ token symbolic names:
 null
 ListaDeclaracoes
 Declaracao
+ListaComandos
+Comando
+ComandoAtribuicao
+ComandoEntrada
+ComandoSaida
+ComandoCondicao
+ComandoRepeticao
+ExpressaoAritmetica
+TermoAritmetico
+FatorAritmetico
+ExpressaoRelacional
+TermoRelacional
+SubAlgoritmo
+OP_REL
 TipoVar
 PCDEC
 PCPROG
@@ -42,6 +74,7 @@ PCLER
 PCREAL
 PCIMPRIMIR
 PCSE
+PCSENAO
 PCENTAO
 PCENQTO
 PCINI
@@ -53,9 +86,12 @@ NUMINT
 NUMREAL
 OPARIT
 OPBOOL
+OPMAIORIGUAL
 OPMAIOR
+OPMENORIGUAL
 OPMENOR
 OPIGUAL
+OPDIF
 CADEIA
 ATRIB
 AbrePar
@@ -67,4 +103,4 @@ prog
 
 
 atn:
-[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 31, 11, 4, 2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 9, 2, 4, 3, 2, 2, 2, 4, 5, 7, 31, 2, 2, 5, 6, 7, 6, 2, 2, 6, 7, 7, 3, 2, 2, 7, 8, 7, 31, 2, 2, 8, 9, 7, 7, 2, 2, 9, 3, 3, 2, 2, 2, 2]
+[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 49, 12, 4, 2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 10, 2, 4, 3, 2, 2, 2, 4, 5, 7, 49, 2, 2, 5, 6, 7, 20, 2, 2, 6, 7, 7, 3, 2, 2, 7, 8, 7, 49, 2, 2, 8, 9, 7, 21, 2, 2, 9, 10, 8, 2, 1, 2, 10, 3, 3, 2, 2, 2, 2]

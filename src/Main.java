@@ -42,7 +42,7 @@ public class Main {
             GyhLangParser parser = new GyhLangParser(token);
             
             parser.prog();
-            parser.generateTarget();
+            parser.generateCommand();
         }
     }
 }

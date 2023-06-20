@@ -18,6 +18,10 @@ grammar GyhLang;
     
     //===
 
+    public void generateCommand(){
+        program.generateTarget();
+    }
+
     public void addTabelaSimbolo(String nome, String tipo, String valor){
         _varSimbolo = new Simbolo(nome, tipo, valor);
         if (_varTabela.exists(nome)){
@@ -29,7 +33,7 @@ grammar GyhLang;
     }
 
     public void verificaVar(String nome){
-        if(_varTabela.exists(nome){
+        if(_varTabela.exists(nome)){
             System.out.println("\n Erro Semantico: variavel nao declarada: " + nome);
         }
     }
@@ -86,18 +90,13 @@ ComandoRepeticao: PCENQTO ExpressaoRelacional Comando;
 
 
 ExpressaoAritmetica: TermoAritmetico (('+' | '-') ExpressaoAritmetica)?;
-//TermoAritmetico → FatorAritmetico TermoAritmetico2;
-//TermoAritmetico2 → '*' FatorAritmetico TermoAritmetico2 | '/' FatorAritmetico TermoAritmetico2 | e;
-//FatorAritmetico → NUMINT | NUMREAL | VARIAVEL | '(' ExpressaoAritmetica ')'
-//ExpressaoRelacional → TermoRelacional ExpressaoRelacional2;
-//ExpressaoRelacional2 → OperadorBooleano TermoRelacional ExpressaoRelacional2 | e;
-//TermoRelacional → ExpressaoAritmetica OP_REL ExpressaoAritmetica | '(' ExpressaoRelacional ')';
-//OperadorBooleano → 'E' | 'OU';
-//ListaComandos → Comando ListaComandos2;
-//ListaComandos2 → ListaComandos | e;
-//SubAlgoritmo → 'INI' ListaComandos 'FIM';
+TermoAritmetico : FatorAritmetico (('*' | '/') FatorAritmetico)*;
+FatorAritmetico: NUMINT | NUMREAL | VAR | '(' ExpressaoAritmetica ')';
+ExpressaoRelacional : TermoRelacional (OPBOOL TermoRelacional)*;
+TermoRelacional : ExpressaoAritmetica OP_REL ExpressaoAritmetica | '(' ExpressaoRelacional ')';
+SubAlgoritmo: 'INI' ListaComandos 'FIM';
 
-
+OP_REL: OPMENORIGUAL | OPIGUAL | OPMAIOR | OPMAIORIGUAL | OPDIF | OPMENOR;
 
 
 
@@ -113,6 +112,7 @@ PCLER : 'LER';
 PCREAL : 'REAL';
 PCIMPRIMIR : 'IMPRIMIR';
 PCSE : 'SE';
+PCSENAO : 'SENAO';
 PCENTAO : 'ENTAO';
 PCENQTO : 'ENQTO';
 PCINI : 'INI';
@@ -129,9 +129,12 @@ NUMREAL: [0-9]* ('.') [0-9]+;
 
 OPARIT: '*' | '/' | '+' | '-';
 OPBOOL: 'E' | 'OU';
+OPMAIORIGUAL: '>=';
 OPMAIOR: '>';
+OPMENORIGUAL: '<=';
 OPMENOR: '<';
 OPIGUAL: ('=')('=');
+OPDIF: '!=';
 
 CADEIA: '"' ([A-Z] | [a-z] | [0-9] | ' ' | '\t' | '<' | '\r' | '>')* '"';
 

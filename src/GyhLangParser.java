@@ -19,7 +19,15 @@ public class GyhLangParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		DELIM=1, PCDEC=2, ListaDeclaracoes=3, PCPROG=4;
+		ListaDeclaracoes=1, Declaracao=2, ListaComandos=3, Comando=4, ComandoAtribuicao=5, 
+		ComandoEntrada=6, ComandoSaida=7, ComandoCondicao=8, ComandoRepeticao=9, 
+		ExpressaoAritmetica=10, TermoAritmetico=11, FatorAritmetico=12, ExpressaoRelacional=13, 
+		TermoRelacional=14, SubAlgoritmo=15, OP_REL=16, TipoVar=17, PCDEC=18, 
+		PCPROG=19, PCINT=20, PCLER=21, PCREAL=22, PCIMPRIMIR=23, PCSE=24, PCSENAO=25, 
+		PCENTAO=26, PCENQTO=27, PCINI=28, PCFIM=29, WS=30, COMMENT=31, VAR=32, 
+		NUMINT=33, NUMREAL=34, OPARIT=35, OPBOOL=36, OPMAIORIGUAL=37, OPMAIOR=38, 
+		OPMENORIGUAL=39, OPMENOR=40, OPIGUAL=41, OPDIF=42, CADEIA=43, ATRIB=44, 
+		AbrePar=45, FechaPar=46, DELIM=47;
 	public static final int
 		RULE_prog = 0;
 	private static String[] makeRuleNames() {
@@ -31,12 +39,24 @@ public class GyhLangParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null, "'DEC'", "'PROG'", "'INT'", "'LER'", 
+			"'REAL'", "'IMPRIMIR'", "'SE'", "'SENAO'", "'ENTAO'", "'ENQTO'", "'INI'", 
+			"'FIM'", null, null, null, null, null, null, null, "'>='", "'>'", "'<='", 
+			"'<'", null, "'!='", null, "':='", "'('", "')'", "':'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "DELIM", "PCDEC", "ListaDeclaracoes", "PCPROG"
+			null, "ListaDeclaracoes", "Declaracao", "ListaComandos", "Comando", "ComandoAtribuicao", 
+			"ComandoEntrada", "ComandoSaida", "ComandoCondicao", "ComandoRepeticao", 
+			"ExpressaoAritmetica", "TermoAritmetico", "FatorAritmetico", "ExpressaoRelacional", 
+			"TermoRelacional", "SubAlgoritmo", "OP_REL", "TipoVar", "PCDEC", "PCPROG", 
+			"PCINT", "PCLER", "PCREAL", "PCIMPRIMIR", "PCSE", "PCSENAO", "PCENTAO", 
+			"PCENQTO", "PCINI", "PCFIM", "WS", "COMMENT", "VAR", "NUMINT", "NUMREAL", 
+			"OPARIT", "OPBOOL", "OPMAIORIGUAL", "OPMAIOR", "OPMENORIGUAL", "OPMENOR", 
+			"OPIGUAL", "OPDIF", "CADEIA", "ATRIB", "AbrePar", "FechaPar", "DELIM"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -100,6 +120,10 @@ public class GyhLangParser extends Parser {
 	    
 	    //===
 
+	    public void generateCommand(){
+	        program.generateTarget();
+	    }
+
 	    public void addTabelaSimbolo(String nome, String tipo, String valor){
 	        _varSimbolo = new Simbolo(nome, tipo, valor);
 	        if (_varTabela.exists(nome)){
@@ -111,7 +135,7 @@ public class GyhLangParser extends Parser {
 	    }
 
 	    public void verificaVar(String nome){
-	        if(_varTabela.exists(nome){
+	        if(_varTabela.exists(nome)){
 	            System.out.println("\n Erro Semantico: variavel nao declarada: " + nome);
 	        }
 	    }
@@ -178,9 +202,10 @@ public class GyhLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\6\f\4\2\t\2\3\2\3"+
-		"\2\3\2\3\2\3\2\3\2\3\2\3\2\2\2\3\2\2\2\2\n\2\4\3\2\2\2\4\5\7\3\2\2\5\6"+
-		"\7\4\2\2\6\7\7\5\2\2\7\b\7\3\2\2\b\t\7\6\2\2\t\n\b\2\1\2\n\3\3\2\2\2\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\61\f\4\2\t\2\3\2"+
+		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\2\2\3\2\2\2\2\n\2\4\3\2\2\2\4\5\7\61\2\2"+
+		"\5\6\7\24\2\2\6\7\7\3\2\2\7\b\7\61\2\2\b\t\7\25\2\2\t\n\b\2\1\2\n\3\3"+
+		"\2\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
