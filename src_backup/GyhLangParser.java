@@ -21,13 +21,13 @@ public class GyhLangParser extends Parser {
 	public static final int
 		ListaDeclaracoes=1, Declaracao=2, ListaComandos=3, Comando=4, ComandoAtribuicao=5, 
 		ComandoEntrada=6, ComandoSaida=7, ComandoCondicao=8, ComandoRepeticao=9, 
-		MAISMENOS=10, VEZESDIV=11, ExpressaoAritmetica=12, TermoAritmetico=13, 
-		FatorAritmetico=14, ExpressaoRelacional=15, TermoRelacional=16, SubAlgoritmo=17, 
-		OP_REL=18, TipoVar=19, PCDEC=20, PCPROG=21, PCINT=22, PCLER=23, PCREAL=24, 
-		PCIMPRIMIR=25, PCSE=26, PCSENAO=27, PCENTAO=28, PCENQTO=29, PCINI=30, 
-		PCFIM=31, WS=32, COMMENT=33, VAR=34, NUMINT=35, NUMREAL=36, OPARIT=37, 
-		OPBOOL=38, OPMAIORIGUAL=39, OPMAIOR=40, OPMENORIGUAL=41, OPMENOR=42, OPIGUAL=43, 
-		OPDIF=44, CADEIA=45, ATRIB=46, AbrePar=47, FechaPar=48, DELIM=49;
+		ExpressaoAritmetica=10, TermoAritmetico=11, FatorAritmetico=12, ExpressaoRelacional=13, 
+		TermoRelacional=14, SubAlgoritmo=15, OP_REL=16, TipoVar=17, PCDEC=18, 
+		PCPROG=19, PCINT=20, PCLER=21, PCREAL=22, PCIMPRIMIR=23, PCSE=24, PCSENAO=25, 
+		PCENTAO=26, PCENQTO=27, PCINI=28, PCFIM=29, WS=30, COMMENT=31, VAR=32, 
+		NUMINT=33, NUMREAL=34, OPARIT=35, OPBOOL=36, OPMAIORIGUAL=37, OPMAIOR=38, 
+		OPMENORIGUAL=39, OPMENOR=40, OPIGUAL=41, OPDIF=42, CADEIA=43, ATRIB=44, 
+		AbrePar=45, FechaPar=46, DELIM=47;
 	public static final int
 		RULE_prog = 0;
 	private static String[] makeRuleNames() {
@@ -40,10 +40,10 @@ public class GyhLangParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, "'DEC'", "'PROG'", "'INT'", 
-			"'LER'", "'REAL'", "'IMPRIMIR'", "'SE'", "'SENAO'", "'ENTAO'", "'ENQTO'", 
-			"'INI'", "'FIM'", null, null, null, null, null, null, null, "'>='", "'>'", 
-			"'<='", "'<'", null, "'!='", null, "':='", "'('", "')'", "':'"
+			null, null, null, null, null, null, "'DEC'", "'PROG'", "'INT'", "'LER'", 
+			"'REAL'", "'IMPRIMIR'", "'SE'", "'SENAO'", "'ENTAO'", "'ENQTO'", "'INI'", 
+			"'FIM'", null, null, null, null, null, null, null, "'>='", "'>'", "'<='", 
+			"'<'", null, "'!='", null, "':='", "'('", "')'", "':'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -51,13 +51,12 @@ public class GyhLangParser extends Parser {
 		return new String[] {
 			null, "ListaDeclaracoes", "Declaracao", "ListaComandos", "Comando", "ComandoAtribuicao", 
 			"ComandoEntrada", "ComandoSaida", "ComandoCondicao", "ComandoRepeticao", 
-			"MAISMENOS", "VEZESDIV", "ExpressaoAritmetica", "TermoAritmetico", "FatorAritmetico", 
-			"ExpressaoRelacional", "TermoRelacional", "SubAlgoritmo", "OP_REL", "TipoVar", 
-			"PCDEC", "PCPROG", "PCINT", "PCLER", "PCREAL", "PCIMPRIMIR", "PCSE", 
-			"PCSENAO", "PCENTAO", "PCENQTO", "PCINI", "PCFIM", "WS", "COMMENT", "VAR", 
-			"NUMINT", "NUMREAL", "OPARIT", "OPBOOL", "OPMAIORIGUAL", "OPMAIOR", "OPMENORIGUAL", 
-			"OPMENOR", "OPIGUAL", "OPDIF", "CADEIA", "ATRIB", "AbrePar", "FechaPar", 
-			"DELIM"
+			"ExpressaoAritmetica", "TermoAritmetico", "FatorAritmetico", "ExpressaoRelacional", 
+			"TermoRelacional", "SubAlgoritmo", "OP_REL", "TipoVar", "PCDEC", "PCPROG", 
+			"PCINT", "PCLER", "PCREAL", "PCIMPRIMIR", "PCSE", "PCSENAO", "PCENTAO", 
+			"PCENQTO", "PCINI", "PCFIM", "WS", "COMMENT", "VAR", "NUMINT", "NUMREAL", 
+			"OPARIT", "OPBOOL", "OPMAIORIGUAL", "OPMAIOR", "OPMENORIGUAL", "OPMENOR", 
+			"OPIGUAL", "OPDIF", "CADEIA", "ATRIB", "AbrePar", "FechaPar", "DELIM"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -117,22 +116,7 @@ public class GyhLangParser extends Parser {
 	    private GyhProgram program = new GyhProgram();
 
 	    private ArrayList<Comando> listCmd = new ArrayList<>();
-	    private ArrayList<Comando> auxList = new ArrayList<>();
 
-	    //cond
-	    private String _varCOND;
-	    private ArrayList<Comando> _varListTrue = new ArrayList<>();
-	    private ArrayList<Comando> _varListFalse = new ArrayList<>();
-
-	    //repet
-	    private String _varREPET;
-	    private ArrayList<Comando> _varListRepet = new ArrayList<>();
-	    
-	    //atrib
-	    private String _varID;
-	    private String _varEXP;
-
-	    
 	    
 	    //===
 
@@ -151,7 +135,7 @@ public class GyhLangParser extends Parser {
 	    }
 
 	    public void verificaVar(String nome){
-	        if(_varTabela.exists(nome) == false){
+	        if(_varTabela.exists(nome)){
 	            System.out.println("\n Erro Semantico: variavel nao declarada: " + nome);
 	        }
 	    }
@@ -169,7 +153,6 @@ public class GyhLangParser extends Parser {
 		public TerminalNode PCDEC() { return getToken(GyhLangParser.PCDEC, 0); }
 		public TerminalNode ListaDeclaracoes() { return getToken(GyhLangParser.ListaDeclaracoes, 0); }
 		public TerminalNode PCPROG() { return getToken(GyhLangParser.PCPROG, 0); }
-		public TerminalNode ListaComandos() { return getToken(GyhLangParser.ListaComandos, 0); }
 		public ProgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -200,8 +183,6 @@ public class GyhLangParser extends Parser {
 			match(DELIM);
 			setState(6);
 			match(PCPROG);
-			setState(7);
-			match(ListaComandos);
 
 			        program.setVarTabela(_varTabela);
 			        program.setComando(listCmd);
@@ -221,10 +202,10 @@ public class GyhLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\63\r\4\2\t\2\3\2"+
-		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\2\2\3\2\2\2\2\13\2\4\3\2\2\2\4\5\7\63"+
-		"\2\2\5\6\7\26\2\2\6\7\7\3\2\2\7\b\7\63\2\2\b\t\7\27\2\2\t\n\7\5\2\2\n"+
-		"\13\b\2\1\2\13\3\3\2\2\2\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\61\f\4\2\t\2\3\2"+
+		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\2\2\3\2\2\2\2\n\2\4\3\2\2\2\4\5\7\61\2\2"+
+		"\5\6\7\24\2\2\6\7\7\3\2\2\7\b\7\61\2\2\b\t\7\25\2\2\t\n\b\2\1\2\n\3\3"+
+		"\2\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
