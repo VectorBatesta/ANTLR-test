@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.Token;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String nomeArquivo = "programa21.gyh";
+        String nomeArquivo = "programa1.gyh";
         
         HashMap<Integer, String> table = new HashMap<Integer, String>();
         table.put(123, "aaaa");
