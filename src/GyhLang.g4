@@ -62,7 +62,7 @@ grammar GyhLang;
 prog: DELIM PCDEC ListaDeclaracoes DELIM PCPROG ListaComandos
     {
         program.setVarTabela(_varTabela);
-        program.setComando(listCmd);
+        program.setComandos(listCmd);
         program.generateTarget();
     } ;
 
